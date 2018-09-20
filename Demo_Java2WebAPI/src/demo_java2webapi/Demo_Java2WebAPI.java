@@ -65,15 +65,13 @@ public class Demo_Java2WebAPI {
                 input = scanner.nextLine();
                 if(input.equals("s"))
                 {
-                
+                    ModifyServerSettings();
+                    Menu_ShowServerSettings();
                 }
                 else if(input.equals("u"))
                 {
-                
-                }
-                else if(input.equals("u"))
-                {
-                
+                    ModifyUserSettings();
+                    Menu_ShowUserSettings();    
                 }
                 else if(input.equals("1"))
                 {
@@ -118,6 +116,18 @@ public class Demo_Java2WebAPI {
         System.out.println("\n");
     }
     
+    public static void Menu_ShowUserAllowItem_1()
+    {
+        System.out.println("TYPE");
+        System.out.println("\t \"s\" for modify server settings");
+        System.out.println("\t \"u\" for modify server settings");
+        System.out.println("\t \"1\" for finger Enroll");
+        System.out.println("\t \"2\" for finger Verify");
+        System.out.println("\t \"3\" for finger Identify");
+        System.out.println("\t \"4\" for finger data Delete");
+        System.out.println("\t \"q\" for quit program");
+    }
+    
     public static void Menu_ShowUserSettings()
     {
         System.out.println("Current User Settins as follow:");
@@ -127,16 +137,21 @@ public class Demo_Java2WebAPI {
         System.out.println("\n");
     }
     
-    public static void Menu_ShowUserAllowItem_1()
+    public static void ModifyUserSettings()
     {
-        System.out.println("type");
-        System.out.println("\t \"s\" for modify server settings");
-        System.out.println("\t \"u\" for modify server settings");
-        System.out.println("\t \"1\" for finger Enroll");
-        System.out.println("\t \"2\" for finger Verify");
-        System.out.println("\t \"3\" for finger Identify");
-        System.out.println("\t \"4\" for finger data Delete");
-        System.out.println("\t \"q\" for quit program");
+        String input;
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Set User ID (string):");
+        input = scanner.nextLine();
+        UI_User_ID = input;
+        
+        System.out.print("Set Finger Index (range 1~10,eq: RIGHT thumb=1...RIGHT little=5, LEFT thumb=6...LEFT little=10):" );
+        input = scanner.nextLine();
+        UI_FP_Index = Integer.parseInt(input);
+        
+        System.out.print("Set Privilege (Range 0~2, means user level):");
+        input = scanner.nextLine();
+        UI_Privilege = Integer.parseInt(input);
     }
     
     public static void Menu_ShowServerSettings()
@@ -155,6 +170,33 @@ public class Demo_Java2WebAPI {
         System.out.println("\t PORT:"+UI_Srv_Port);
         System.out.println("\t Enable HTTPS:"+ UI_HTTPS_Enable_str);
         System.out.println("\n");
+    }
+    
+    public static void ModifyServerSettings()
+    {
+        String input;
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.print("Set IP:");
+        input = scanner.nextLine();
+        UI_Srv_IP = input;
+        
+        System.out.print("Set PORT:");
+        input = scanner.nextLine();
+        UI_Srv_Port = input;
+        
+        System.out.print("Set Enable HTTPS (y/n):");
+        input = scanner.nextLine();
+
+        if(input.equals("y"))
+        {
+            UI_HTTPS_Enable =true;
+        }
+        else
+        {
+            UI_HTTPS_Enable =false;
+        }
+
     }
         
     private static void do_Load_FP_Service()
@@ -317,8 +359,8 @@ public class Demo_Java2WebAPI {
                 connection.setRequestProperty("Accept", "application/json");
                 connection.setRequestProperty("Content-length", Integer.toString(json_string.length())); //?
                 connection.setRequestProperty("User-agent","myapp");
-                connection.setConnectTimeout(15000);
-                connection.setReadTimeout(15000);
+                connection.setConnectTimeout(120000);
+                connection.setReadTimeout(120000);
                 connection.setUseCaches(false); 
                 connection.setDoOutput(true);
                 connection.setDoInput(true);
@@ -339,8 +381,8 @@ public class Demo_Java2WebAPI {
                 connection.setRequestProperty("Accept", "application/json");
                 connection.setRequestProperty("Content-Length", Integer.toString(json_string.length())); //?
                 connection.setRequestProperty("User-agent","myapp");
-                connection.setConnectTimeout(15000);
-                connection.setReadTimeout(15000);
+                connection.setConnectTimeout(120000);
+                connection.setReadTimeout(120000);
                 connection.setUseCaches(false); 
                 connection.setDoOutput(true);
                 connection.setDoInput(true);
@@ -569,8 +611,8 @@ public class Demo_Java2WebAPI {
                 connection.setRequestProperty("Accept", "application/json");
                 connection.setRequestProperty("Content-Length", Integer.toString(json_string.length())); //?
                 connection.setRequestProperty("User-agent","myapp");
-                connection.setConnectTimeout(15000);
-                connection.setReadTimeout(15000);
+                connection.setConnectTimeout(120000);
+                connection.setReadTimeout(120000);
                 connection.setUseCaches(false); 
                 connection.setDoOutput(true);
                 connection.setDoInput(true);
@@ -590,8 +632,8 @@ public class Demo_Java2WebAPI {
                 connection.setRequestProperty("Accept", "application/json");
                 connection.setRequestProperty("Content-Length", Integer.toString(json_string.length())); //?
                 connection.setRequestProperty("User-agent","myapp");
-                connection.setConnectTimeout(15000);
-                connection.setReadTimeout(15000);
+                connection.setConnectTimeout(120000);
+                connection.setReadTimeout(120000);
                 connection.setUseCaches(false); 
                 connection.setDoOutput(true);
                 connection.setDoInput(true);
