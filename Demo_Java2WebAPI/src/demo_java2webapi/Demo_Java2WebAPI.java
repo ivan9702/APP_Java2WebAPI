@@ -16,7 +16,7 @@ import java.security.cert.X509Certificate;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLSession;
-
+import java.net.SocketTimeoutException;
 
 import java.net.MalformedURLException;
 import java.io.*;
@@ -29,6 +29,8 @@ import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.JsonParseException;
+
+import java.util.Scanner;
 
 /**
  *
@@ -49,9 +51,112 @@ public class Demo_Java2WebAPI {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        Scanner scanner = new Scanner(System.in);
+        String input;
+        try 
+        {
+            Menu_ShowWelcome();
+            Menu_ShowServerSettings();
+            Menu_ShowUserSettings();
 
-         do_Delete();
+            while (true) 
+            {
+                Menu_ShowUserAllowItem_1();
+                input = scanner.nextLine();
+                if(input.equals("s"))
+                {
+                
+                }
+                else if(input.equals("u"))
+                {
+                
+                }
+                else if(input.equals("u"))
+                {
+                
+                }
+                else if(input.equals("1"))
+                {
+                    do_Enroll();
+                }
+                else if(input.equals("2"))
+                {
+                    do_Verify();
+                }
+                else if(input.equals("3"))
+                {
+                    do_Identify();
+                }
+                else if(input.equals("4"))
+                {
+                    do_Delete();
+                }
+                else if(input.equals("q"))
+                {
+                    break;
+                }
+                else
+                {
+                    System.out.println("Unknown input of :"+ input);
+                }
+                
+                
+            }
+        } 
+        catch(IllegalStateException e) 
+        {
+            // System.in has been closed
+            System.out.println("System.in was closed; exiting");
+        }
     }
+    
+    public static void Menu_ShowWelcome()
+    {
+        System.out.println("\n");
+        System.out.println("---Welcome to STARTEK java to WebAPI Demo Program ---");
+        System.out.println("---Please select what you want to do");
+        System.out.println("\n");
+    }
+    
+    public static void Menu_ShowUserSettings()
+    {
+        System.out.println("Current User Settins as follow:");
+        System.out.println("\t User ID (string):"+ UI_User_ID);
+        System.out.println("\t Finger Index (range 1~10,eq: RIGHT thumb=1...RIGHT little=5, LEFT thumb=6...LEFT little=10):"+  Integer.toString(UI_FP_Index) );
+        System.out.println("\t Privilege (Range 0~2, means user level):"+  Integer.toString(UI_Privilege) );
+        System.out.println("\n");
+    }
+    
+    public static void Menu_ShowUserAllowItem_1()
+    {
+        System.out.println("type");
+        System.out.println("\t \"s\" for modify server settings");
+        System.out.println("\t \"u\" for modify server settings");
+        System.out.println("\t \"1\" for finger Enroll");
+        System.out.println("\t \"2\" for finger Verify");
+        System.out.println("\t \"3\" for finger Identify");
+        System.out.println("\t \"4\" for finger data Delete");
+        System.out.println("\t \"q\" for quit program");
+    }
+    
+    public static void Menu_ShowServerSettings()
+    {
+        String UI_HTTPS_Enable_str = "";
+        if(UI_HTTPS_Enable ==true)
+        {
+            UI_HTTPS_Enable_str="yes";
+        }
+        else
+        {
+            UI_HTTPS_Enable_str="no";
+        }
+        System.out.println("Current Redirect Server Settins as follow:");
+        System.out.println("\t IP:"+ UI_Srv_IP);
+        System.out.println("\t PORT:"+UI_Srv_Port);
+        System.out.println("\t Enable HTTPS:"+ UI_HTTPS_Enable_str);
+        System.out.println("\n");
+    }
+        
     private static void do_Load_FP_Service()
     {
         WebAPI_load_fp_srv();
@@ -212,6 +317,8 @@ public class Demo_Java2WebAPI {
                 connection.setRequestProperty("Accept", "application/json");
                 connection.setRequestProperty("Content-length", Integer.toString(json_string.length())); //?
                 connection.setRequestProperty("User-agent","myapp");
+                connection.setConnectTimeout(15000);
+                connection.setReadTimeout(15000);
                 connection.setUseCaches(false); 
                 connection.setDoOutput(true);
                 connection.setDoInput(true);
@@ -232,6 +339,8 @@ public class Demo_Java2WebAPI {
                 connection.setRequestProperty("Accept", "application/json");
                 connection.setRequestProperty("Content-Length", Integer.toString(json_string.length())); //?
                 connection.setRequestProperty("User-agent","myapp");
+                connection.setConnectTimeout(15000);
+                connection.setReadTimeout(15000);
                 connection.setUseCaches(false); 
                 connection.setDoOutput(true);
                 connection.setDoInput(true);
@@ -255,6 +364,10 @@ public class Demo_Java2WebAPI {
             rd.close();
             ret_str = response.toString();
            
+        }
+        catch(SocketTimeoutException e)
+        {
+            System.out.println("TIMEOUT: " + e);
         }
         catch(Exception e) 
         {
@@ -456,6 +569,8 @@ public class Demo_Java2WebAPI {
                 connection.setRequestProperty("Accept", "application/json");
                 connection.setRequestProperty("Content-Length", Integer.toString(json_string.length())); //?
                 connection.setRequestProperty("User-agent","myapp");
+                connection.setConnectTimeout(15000);
+                connection.setReadTimeout(15000);
                 connection.setUseCaches(false); 
                 connection.setDoOutput(true);
                 connection.setDoInput(true);
@@ -475,6 +590,8 @@ public class Demo_Java2WebAPI {
                 connection.setRequestProperty("Accept", "application/json");
                 connection.setRequestProperty("Content-Length", Integer.toString(json_string.length())); //?
                 connection.setRequestProperty("User-agent","myapp");
+                connection.setConnectTimeout(15000);
+                connection.setReadTimeout(15000);
                 connection.setUseCaches(false); 
                 connection.setDoOutput(true);
                 connection.setDoInput(true);
@@ -505,9 +622,13 @@ public class Demo_Java2WebAPI {
             
             
         }
+        catch(SocketTimeoutException e)
+        {
+            System.out.println("TIMEOUT: " + e);
+        }
         catch(Exception e) 
         {
-            System.out.println("ERROr: " + e);
+            System.out.println("ERROR: " + e);
         }
         finally 
         {
