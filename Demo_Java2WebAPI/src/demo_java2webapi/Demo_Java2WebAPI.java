@@ -6,11 +6,9 @@
 package demo_java2webapi;
 import java.net.URL;
 import java.net.HttpURLConnection;
-import java.security.cert.Certificate;
 import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLPeerUnverifiedException;
 import javax.net.ssl.TrustManager;
-//import javax.net.ssl.TrustManagerFactory;
+
 import javax.net.ssl.X509TrustManager;
 import java.security.cert.X509Certificate;
 import javax.net.ssl.SSLContext;
@@ -41,7 +39,7 @@ public class Demo_Java2WebAPI {
     public static int UI_FP_Index = 1;
     public static String UI_User_ID = "035X";
     public static Boolean UI_HTTPS_Enable = true;
-    public static int UI_Privilege = 2;
+    public static int UI_Privilege = 1;
     
     public static String UI_Srv_IP = "192.168.1.76";
     public static String UI_Srv_Port = "8444";  //8444 for https, 
@@ -133,7 +131,7 @@ public class Demo_Java2WebAPI {
         System.out.println("Current User Settins as follow:");
         System.out.println("\t User ID (string):"+ UI_User_ID);
         System.out.println("\t Finger Index (range 1~10,eq: RIGHT thumb=1...RIGHT little=5, LEFT thumb=6...LEFT little=10):"+  Integer.toString(UI_FP_Index) );
-        System.out.println("\t Privilege (Range 0~2, means user level):"+  Integer.toString(UI_Privilege) );
+        //System.out.println("\t Privilege (Range 0~2, means user level):"+  Integer.toString(UI_Privilege) );
         System.out.println("\n");
     }
     
@@ -149,9 +147,12 @@ public class Demo_Java2WebAPI {
         input = scanner.nextLine();
         UI_FP_Index = Integer.parseInt(input);
         
+        //Allow UI_Privilege =1 only for demo purpose , 2018/10/22
+        /*
         System.out.print("Set Privilege (Range 0~2, means user level):");
         input = scanner.nextLine();
         UI_Privilege = Integer.parseInt(input);
+        */
     }
     
     public static void Menu_ShowServerSettings()
